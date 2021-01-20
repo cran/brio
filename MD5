@@ -1,7 +1,7 @@
-dc1a3212d398ce7a9d5e1331aa8228aa *DESCRIPTION
+e5f990417eb214cf477e36ea3a645b03 *DESCRIPTION
 5174dfc514f0941d2edd4b0b4c9941dd *LICENSE
 a0c97bb9e7e99fdf59d375c1dfb50dc7 *NAMESPACE
-1f8ae57b9bd5db309c4a24c29da9fc2a *NEWS.md
+5620b3afe26b7fd3bb7a8af6aad7427c *NEWS.md
 0e69c43d9eff412c53206329383e08e4 *R/file_line_endings.R
 bcc8a3254419abe5faad39c3ad3ce6f6 *R/package.R
 14c24d4ef66eb69aa1294c9a69c856fa *R/readLines.R
@@ -9,7 +9,7 @@ bcc8a3254419abe5faad39c3ad3ce6f6 *R/package.R
 30bfa707729ec772d1686924992968df *R/read_file_raw.R
 f3da7fa147c36465e908b908ba81a49e *R/read_lines.R
 498c8779310452da7cdf0859af378447 *R/writeLines.R
-61e0d67d7185842478d002db0e283cb0 *R/write_file.R
+88ec2cb825acb3e8b9316127f9d73a74 *R/write_file.R
 5f0498131536076f2f214fe13c4e0659 *R/write_lines.R
 6ed17ab80cd18fd3d726ff14a4eebb40 *README.md
 f33b35f5ec1176833cf91226eb87daae *man/file_line_endings.Rd
@@ -17,11 +17,11 @@ b51a772df842fe84c3bf204a229ee290 *man/readLines.Rd
 4548333d064610b420c5632e0f22d6ba *man/read_file.Rd
 db54df3ee4936dfcd4ba71bd1c4cee36 *man/read_lines.Rd
 baab6e5fe7131f14b2ac7b76cb6a0cd9 *man/writeLines.Rd
-81fcf0fa1ffadaa30c67714e7703efac *man/write_file.Rd
+73945024f6aff4cf2739b855a65040ca *man/write_file.Rd
 d0294438216c19bcd49cc6bfa03ffbe7 *man/write_lines.Rd
 bb5cb7f4e37b9f3289e777ec579d366b *src/brio.c
 82726897f88088a574b625e307a485dd *src/brio.h
-258686e7d4af2adf305f3a341f79516f *src/file_line_endings.c
+d7ab67a6ac62e885655629ec85c323b6 *src/file_line_endings.c
 0d7def86ea2e8db23f9cff77fc2d3f79 *src/init.c
 df90873de33d6ce630b70e202afa6b97 *src/read_file.c
 ab2d17c7ba940d6d4088396c31dec43f *src/read_file_raw.c
