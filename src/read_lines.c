@@ -41,12 +41,10 @@ SEXP brio_read_lines(SEXP path, SEXP n) {
     return allocVector(STRSXP, 0);
   }
 
-  const char* path_c = CHAR(STRING_ELT(path, 0));
-
   FILE* fp;
 
-  if ((fp = open_with_widechar_on_windows(path_c, "rb")) == NULL) {
-    error("Could not open file: %s", path_c);
+  if ((fp = open_with_widechar_on_windows(STRING_ELT(path, 0), "rb")) == NULL) {
+    error("Could not open file: %s", Rf_translateChar(STRING_ELT(path, 0)));
   }
 
   SEXP out;
@@ -64,12 +62,21 @@ SEXP brio_read_lines(SEXP path, SEXP n) {
   line.data = (char*)malloc(line.limit);
   line.size = 0;
 
+  if (!line.data) {
+    fclose(fp);
+    error("Allocation of size %i failed", line.limit);
+  }
+
   size_t read_size = 0;
   while ((read_size = fread(read_buf, 1, READ_BUF_SIZE - 1, fp)) > 0) {
+    if (read_size != READ_BUF_SIZE - 1 && ferror(fp)) {
+      error(
+          "Error reading from file: %s", Rf_translateChar(STRING_ELT(path, 0)));
+    }
     read_buf[read_size] = '\0';
     // Find the newlines
     const char* prev_newline = read_buf;
-    const char* next_newline = read_buf;
+    const char* next_newline;
 
     while ((next_newline = strchr(prev_newline, '\n')) != NULL) {
       size_t len = next_newline - prev_newline;

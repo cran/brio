@@ -6,12 +6,10 @@
 #include "brio.h"
 
 SEXP brio_read_file(SEXP path) {
-  const char* path_c = CHAR(STRING_ELT(path, 0));
-
   FILE* fp;
 
-  if ((fp = open_with_widechar_on_windows(path_c, "rb")) == NULL) {
-    error("Could not open file: %s", path_c);
+  if ((fp = open_with_widechar_on_windows(STRING_ELT(path, 0), "rb")) == NULL) {
+    error("Could not open file: %s", Rf_translateChar(STRING_ELT(path, 0)));
   }
 
   fseek(fp, 0, SEEK_END);       // seek to end of file
@@ -26,14 +24,19 @@ SEXP brio_read_file(SEXP path) {
   char* read_buf;
 
   read_buf = (char*)malloc(file_size + 1);
+  if (!read_buf) {
+    fclose(fp);
+    error("Allocation of size %i failed", file_size + 1);
+  }
   read_buf[file_size] = '\0';
 
-  if ((fread(read_buf, 1, file_size, fp)) <= 0) {
+  if ((fread(read_buf, 1, file_size, fp)) != file_size) {
     fclose(fp);
-    error("Error reading file: %s", path_c);
-  };
+    error("Error reading file: %s", Rf_translateChar(STRING_ELT(path, 0)));
+  }
 
   fclose(fp);
+
   SEXP ans;
   PROTECT(ans = allocVector(STRSXP, 1));
   SET_STRING_ELT(ans, 0, mkCharLenCE(read_buf, file_size, CE_UTF8));
