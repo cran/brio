@@ -13,7 +13,7 @@
     R_xlen_t i = I;                                                            \
     while (i >= len) {                                                         \
       len *= 2;                                                                \
-      REPROTECT(X = Rf_lengthgets(X, len), P_IDX);                             \
+      REPROTECT(X = Rf_xlengthgets(X, len), P_IDX);                             \
     }                                                                          \
     SET_STRING_ELT(X, i, VAL);                                                 \
   }
@@ -70,6 +70,7 @@ SEXP brio_read_lines(SEXP path, SEXP n) {
   size_t read_size = 0;
   while ((read_size = fread(read_buf, 1, READ_BUF_SIZE - 1, fp)) > 0) {
     if (read_size != READ_BUF_SIZE - 1 && ferror(fp)) {
+      free(line.data);
       error(
           "Error reading from file: %s", Rf_translateChar(STRING_ELT(path, 0)));
     }
@@ -101,6 +102,7 @@ SEXP brio_read_lines(SEXP path, SEXP n) {
       UNPROTECT(1);
 
       if (n_c > 0 && out_num >= n_c) {
+        free(line.data);
         fclose(fp);
         UNPROTECT(1);
         return out;
@@ -126,6 +128,7 @@ SEXP brio_read_lines(SEXP path, SEXP n) {
   }
 
   fclose(fp);
+  free(line.data);
 
   UNPROTECT(1);
   return out;
